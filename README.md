@@ -1,3 +1,15 @@
+[![Build Status](https://travis-ci.org/MartinThoma/geocodertools.svg?branch=master)](https://travis-ci.org/MartinThoma/geocodertools)
+[![Coverage Status](https://img.shields.io/coveralls/MartinThoma/geocodertools.svg)](https://coveralls.io/r/MartinThoma/geocodertools?branch=master)
+[![Documentation Status](http://img.shields.io/badge/docs-latest-brightgreen.svg)](http://pythonhosted.org/geocodertools)
+[![Code Health](https://landscape.io/github/MartinThoma/geocodertools/master/landscape.svg)](https://landscape.io/github/MartinThoma/geocodertools/master)
+
+## Installation
+
+```bash
+# pip install geocodertools
+$ geocodertools --lng 8.40 --lat 49.3
+```
+
 ## Usage
 
 ### Command line
