@@ -6,14 +6,18 @@
 
 import math
 import os
+from os.path import expanduser
 
 import logging
 import sys
 
-import urllib
+try:
+    from urllib.request import urlretrieve
+except:
+    from urllib import urlretrieve
 import zipfile
-import pkg_resources
 import msgpack
+import geocodertools
 
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s',
                     level=logging.DEBUG,
@@ -24,9 +28,13 @@ def download():
     """Download cities database."""
     url = "http://download.geonames.org/export/dump/cities1000.zip"
     logging.info("Download cities from %s", url)
-    misc_path = pkg_resources.resource_filename('geocodertools', 'misc/')
+
+    home = expanduser("~")
+    misc_path = os.path.join(home, "geocodertools")
+    if not os.path.exists(misc_path):
+        os.makedirs(misc_path)
     zip_path = os.path.join(misc_path, "cities1000.zip")
-    urllib.urlretrieve(url, zip_path)
+    urlretrieve(url, zip_path)
     with zipfile.ZipFile(zip_path, "r") as z:
         z.extractall(misc_path)
 
@@ -37,7 +45,10 @@ def build_db():
 
        TODO: Download it automatically if it is not here.
     """
-    misc_path = pkg_resources.resource_filename('geocodertools', 'misc/')
+    home = expanduser("~")
+    misc_path = os.path.join(home, "geocodertools")
+    if not os.path.exists(misc_path):
+        os.makedirs(misc_path)
     cities_path = os.path.join(misc_path, "cities1000.txt")
     cities_msgpack = os.path.join(misc_path, "cities1000.bin")
     if not os.path.isfile(cities_path):
@@ -183,7 +194,18 @@ def get_parser():
                         dest="longitude",
                         required=True,
                         help="Longitude (in -180, 180)")
+    parser.add_argument('--version',
+                        action='version',
+                        version=('geocodertools %s' % str(geocodertools.__version__)))
     return parser
+
+
+def get_city(pos, bobj=None):
+    if bobj is None:
+        db = build_db()
+        bobj = bin(db)
+    city = bobj.get(pos)
+    return city
 
 
 def main(pos, bobj=None):
@@ -191,10 +213,7 @@ def main(pos, bobj=None):
     :param pos: A dictionary with {'latitude': 8.12, 'longitude': 42.6}
     :param bobj: An object which has a 'get' method and returns a dictionary.
     """
-    if bobj is None:
-        db = build_db()
-        bobj = bin(db)
-    city = bobj.get(pos)
+    city = get_city(pos, bobj)
     for key, value in sorted(city.items()):
         print("%s: %s" % (key, value))
 
