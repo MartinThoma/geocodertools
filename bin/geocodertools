@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""geocodertools can be used to get information out of VINs.
+"""
+
+import logging
+import sys
+logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s',
+                    level=logging.DEBUG,
+                    stream=sys.stdout)
+
+# geocodertools modules
+# Every geocodertools tool that should be available through
+#   geocodertools TOOL
+# has to be added to ``get_parser()`` and to ``main``.
+from geocodertools import reverse
+
+if __name__ == '__main__':
+    args = reverse.get_parser().parse_args()
+    reverse.main({'latitude': float(args.latitude),
+                  'longitude': float(args.longitude)})
