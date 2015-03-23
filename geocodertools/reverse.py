@@ -14,7 +14,7 @@ import datetime
 
 try:
     from urllib.request import urlretrieve
-except:
+except ImportError:
     from urllib import urlretrieve
 import zipfile
 import msgpack
@@ -124,7 +124,7 @@ def find_closest(db, pos):
     return closest_dataset, closest_dist
 
 
-class bin(object):
+class BinClassifier(object):
     """Datastructure which simply bins by latitude for nearest neighbor
        searches.
     """
@@ -195,7 +195,7 @@ def get_parser():
 def get_city(pos, bobj=None):
     if bobj is None:
         db = build_db()
-        bobj = bin(db)
+        bobj = BinClassifier(db)
     city = bobj.get(pos)
     return city
 
@@ -244,7 +244,7 @@ if __name__ == '__main__':
     pos = {'longitude': 8.4229068, 'latitude': 49.0151657}
     pos = {'longitude': -71.312796, 'latitude': 41.49008}
     db = build_db()
-    bobj = bin(db)
+    bobj = BinClassifier(db)
 
     import timeit
     a = timeit.timeit('main(pos, bobj)',
