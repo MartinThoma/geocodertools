@@ -45,8 +45,6 @@ def download():
 def build_db():
     """Get a structured dataset out of
        http://download.geonames.org/export/dump/cities1000.txt
-
-       TODO: Download it automatically if it is not here.
     """
     if not os.path.exists(MISC_PATH):
         os.makedirs(MISC_PATH)
@@ -126,27 +124,6 @@ def find_closest(db, pos):
     return closest_dataset, closest_dist
 
 
-class geoquery(object):
-    """TODO: NOT READY.
-
-    Datastructure for nearest neighbor searches.
-    """
-    def __init__(self, db):
-        # Each element in this list has to be a dictionary with 'min', 'max'
-        self.dimensions = []
-
-        if len(db) > 1000:
-            d = []
-            for i in range(1, 5):
-                d.append([])
-                while len(d[i]) < len(db) / 5.0:
-                    d[i].append()  # TODO
-
-    def get(self, latitude, longitude):
-        """Get the closest dataset."""
-        pass
-
-
 class bin(object):
     """Datastructure which simply bins by latitude for nearest neighbor
        searches.
@@ -206,7 +183,7 @@ def get_parser():
     parser.add_argument("--lng",
                         dest="longitude",
                         required=True,
-                        type=float,
+                        type=longitude,
                         help="Longitude (in -180, 180)")
     version = geocodertools.__version__
     parser.add_argument('--version',

@@ -5,7 +5,7 @@ except ImportError:
 
 config = {
     'name': 'geocodertools',
-    'version': '0.1.4',
+    'version': '0.1.6',
     'author': 'Martin Thoma',
     'author_email': 'info@martin-thoma.de',
     'maintainer': 'Martin Thoma',
