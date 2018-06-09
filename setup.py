@@ -1,11 +1,22 @@
+# core modules
+import io
+import os
+
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
+
+def read(file_name):
+    """Read a text file and return the content as a string."""
+    with io.open(os.path.join(os.path.dirname(__file__), file_name),
+                 encoding='utf-8') as f:
+        return f.read()
+
 config = {
     'name': 'geocodertools',
-    'version': '0.1.6',
+    'version': '0.1.7',
     'author': 'Martin Thoma',
     'author_email': 'info@martin-thoma.de',
     'maintainer': 'Martin Thoma',
@@ -19,14 +30,15 @@ config = {
     'description': ('Functions to work with Geo coordinates, reverse geo '
                     'coding and getting city names out of coordinates without '
                     'internet'),
-    'long_description': ("A tookit geo information"),
+    'long_description': read('README.md'),
+    'long_description_content_type': 'text/markdown',
     'install_requires': [
         "argparse",
         "nose"
     ],
     'keywords': ['geocoder', 'longitude', 'latitude'],
     'download_url': 'https://github.com/MartinThoma/geocodertools',
-    'classifiers': ['Development Status :: 3 - Alpha',
+    'classifiers': ['Development Status :: 7 - Inactive',
                     'Environment :: Console',
                     'Intended Audience :: Developers',
                     'Intended Audience :: Science/Research',
